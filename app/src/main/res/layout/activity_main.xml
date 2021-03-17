@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/username"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/ofer_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/aviv_button"
+        android:layout_width="79dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:onClick="nextPage"
+        android:text="@string/aviv"
+        app:backgroundTint="@color/teal_700"
+        app:layout_constraintBottom_toTopOf="@+id/rate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keren_button" />
+
+    <Button
+        android:id="@+id/roee_button"
+        android:layout_width="79dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:onClick="nextPage"
+        android:text="@string/roee"
+        app:backgroundTint="@color/green"
+        app:layout_constraintBottom_toTopOf="@+id/keren_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nava_button" />
+
+    <Button
+        android:id="@+id/ofer_button"
+        android:layout_width="79dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:onClick="nextPage"
+        android:text="@string/ofer"
+        app:backgroundTint="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/nava_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/keren_button"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:onClick="nextPage"
+        android:text="@string/keren"
+        app:backgroundTint="@color/pink"
+        app:layout_constraintBottom_toTopOf="@+id/aviv_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roee_button" />
+
+    <Button
+        android:id="@+id/nava_button"
+        android:layout_width="79dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:clickable="false"
+        android:onClick="nextPage"
+        android:text="@string/nava"
+        app:backgroundTint="@color/purple_500"
+        app:layout_constraintBottom_toTopOf="@+id/roee_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ofer_button" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/rate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
