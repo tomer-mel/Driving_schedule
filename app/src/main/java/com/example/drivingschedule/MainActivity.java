@@ -1,18 +1,24 @@
 package com.example.drivingschedule;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
+import java.io.EOFException;
+import java.io.InputStreamReader;
 import java.net.Socket;
-import java.net.SocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "MESSAGE";
@@ -20,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String info = getInfo();
-        //loadweek(info);
     }
 
 
@@ -31,65 +35,29 @@ public class MainActivity extends AppCompatActivity {
         String message = textView.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+
     }
-    public String getInfo(){
-        String info = "";
-        try{
-            String ip= "127.0.0.1";
-            int port = 6789;
-            Socket s = new Socket(ip, port);
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("GET");
-            DataInputStream din = new DataInputStream(s.getInputStream());
-            info = din.readUTF();
-            din.close();
-            s.close();
-        }catch(Exception e){System.out.println(e);}
-        return info;
-    }
-    public void loadweek(String info) {
-        LinearLayout ll=(LinearLayout)findViewById(R.id.LinearLayout);
-        String tag;
-        String message;
-        for (int i = 1; i != 127; i = i+1) {
-            tag = String.valueOf(i);
-            TextView txt = (TextView) ll.findViewWithTag(tag);
-            if (info.startsWith("O")) {
-                info = info.substring(4);
-                message = "Ofer";
-                txt.setText(message);
-            }
-            if (info.startsWith("N")) {
-                info = info.substring(4);
-                message = "Nava";
-                txt.setText(message);
-            }
-            if (info.startsWith("R")) {
-                info = info.substring(4);
-                message = "Roee";
-                txt.setText(message);
-            }
-            if (info.startsWith("K")) {
-                info = info.substring(5);
-                message = "Keren";
-                txt.setText(message);
-            }
-            if (info.startsWith("A")) {
-                info = info.substring(4);
-                message = "Aviv";
-                txt.setText(message);
-            }
-            if (info.startsWith("N")) {
-                info = info.substring(2);
-                message = "";
-                txt.setText(message);
-            }
-        }
-        if (info.startsWith("r")) {
-            info = info.substring(4);
-            TextView textView = findViewById(R.id.rate);
-            String rate ="Need another car:" + info;
-            textView.setText(rate);
-            }
-    }
+
 }
+
+//new Thread(new Runnable(){
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void run() {
+//                String info = "";
+//                try{
+//                    String ip= "192.168.14.82";
+//                    int port = 6789;
+//                    Socket s = new Socket(ip, port);
+//                    DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+//                    dout.writeUTF("GET");
+//                    BufferedReader din = new BufferedReader(new InputStreamReader(s.getInputStream()));
+//                    int rate = din.read();
+//                    info = din.readLine();
+//                    din.close();
+//                    dout.close();
+//                    s.close();
+//                    info += Integer.toString(rate);
+//                }catch(Exception e){System.out.println(e);}
+//            }
+//        }).start();

@@ -36,5 +36,5 @@
     <string name="delete">Delete</string>
     <string name="username">Choose User Name:</string>
     <string name="save">Tap Here To Save</string>
-    <string name="rate">Need another car</string>
+    <string name="rate"></string>
 </resources>

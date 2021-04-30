@@ -1,13 +1,18 @@
 package com.example.drivingschedule;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.*;
 
 public class login extends AppCompatActivity {
@@ -33,6 +38,26 @@ public class login extends AppCompatActivity {
             textView2.setTextColor(getResources().getColor(R.color.pink));
         if (message.equals("Aviv"))
             textView2.setTextColor(getResources().getColor(R.color.teal_700));
+        new Thread(new Runnable(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void run() {
+                String info = "";
+                try{
+                    String ip= "192.168.14.82";
+                    int port = 6789;
+                    Socket s = new Socket(ip, port);
+                    DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+                    dout.writeUTF("GET");
+                    BufferedReader din = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                    info = din.readLine();
+                    din.close();
+                    dout.close();
+                    s.close();
+                    loadweek(info);
+                }catch(Exception e){System.out.println(e);}
+            }
+        }).start();
     }
 
     public void selectCube(View view3) {
@@ -90,12 +115,12 @@ public class login extends AppCompatActivity {
         LinearLayout ll=(LinearLayout)findViewById(R.id.LinearLayout);
         StringBuilder AllInfo = new StringBuilder();
         String tag;
-        for (int i = 1; i != 134; i = i+1) {
+        for (int i = 1; i != 127; i = i+1) {
             tag = String.valueOf(i);
             TextView txt= (TextView) ll.findViewWithTag(tag);
             String message = txt.getText().toString();
             if (message.equals("")) {
-                AllInfo.append("No");
+                AllInfo.append("no");
             }
             else {
                 AllInfo.append(message);
@@ -103,18 +128,64 @@ public class login extends AppCompatActivity {
         }
         return AllInfo.toString();
     }
-    public void send(){
-        String Info = "Post";
-        String info = save();
-        Info += info;
-        try{
-            Socket s = new Socket("192.168.14.5",6789);
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("Hello Server");
-            dout.writeChars(Info);
-            dout.flush();
-            dout.close();
-            s.close();
-        }catch(Exception e){System.out.println("error");}
+    public void send(View view){
+        new Thread(new Runnable(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void run() {
+                String Info = "POST";
+                String info = save();
+                Info += info;
+                try{
+                    String ip= "192.168.14.82";
+                    int port = 6789;
+                    Socket s = new Socket(ip, port);
+                    DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+                    dout.writeUTF(Info);
+                    dout.close();
+                    s.close();
+                }catch(Exception e){System.out.println(e);}
+            }
+        }).start();
+    }
+
+    public void loadweek(String info) {
+        String tag;
+        String message;
+        for (int i = 1; i != 127; i = i+1) {
+            tag = String.valueOf(i);
+            LinearLayout ll = (LinearLayout) findViewById(R.id.LinearLayout);
+            TextView txt = (TextView) ll.findViewWithTag(tag);
+            if (info.startsWith("O")) {
+                info = info.substring(4);
+                message = "Ofer";
+                txt.setText(message);
+            }
+            if (info.startsWith("N")) {
+                info = info.substring(4);
+                message = "Nava";
+                txt.setText(message);
+            }
+            if (info.startsWith("R")) {
+                info = info.substring(4);
+                message = "Roee";
+                txt.setText(message);
+            }
+            if (info.startsWith("K")) {
+                info = info.substring(5);
+                message = "Keren";
+                txt.setText(message);
+            }
+            if (info.startsWith("A")) {
+                info = info.substring(4);
+                message = "Aviv";
+                txt.setText(message);
+            }
+            if (info.startsWith("n")) {
+                info = info.substring(2);
+                message = "";
+                txt.setText(message);
+            }
+        }
     }
 }
