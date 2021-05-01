@@ -46,7 +46,7 @@ public class login extends AppCompatActivity {
             public void run() {
                 String info = "";
                 try{
-                    String ip= "192.168.14.82";
+                    String ip= "192.168.14.5";
                     int port = 6789;
                     Socket s = new Socket(ip, port);
                     DataOutputStream dout = new DataOutputStream(s.getOutputStream());
@@ -140,7 +140,7 @@ public class login extends AppCompatActivity {
                 String info = save();
                 Info += info;
                 try{
-                    String ip= "192.168.14.82";
+                    String ip= "192.168.14.5";
                     int port = 6789;
                     Socket s = new Socket(ip, port);
                     DataOutputStream dout = new DataOutputStream(s.getOutputStream());
