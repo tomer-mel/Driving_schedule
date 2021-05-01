@@ -14,7 +14,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.*;
-
+class Global {
+    public static String Info = "";
+}
 public class login extends AppCompatActivity {
 
     @Override
@@ -51,6 +53,7 @@ public class login extends AppCompatActivity {
                     dout.writeUTF("GET");
                     BufferedReader din = new BufferedReader(new InputStreamReader(s.getInputStream()));
                     info = din.readLine();
+                    Global.Info = info;
                     din.close();
                     dout.close();
                     s.close();
@@ -58,6 +61,7 @@ public class login extends AppCompatActivity {
                 }catch(Exception e){System.out.println(e);}
             }
         }).start();
+        loadweek(Global.Info);
     }
 
     public void selectCube(View view3) {
@@ -79,14 +83,13 @@ public class login extends AppCompatActivity {
         } else if (message.equals("Nava")) {
             textView.setText(message);
             textView.setTextColor(getResources().getColor(R.color.purple_500));
-        }
-        else if (message.equals("Ofer")) {
+        } else if (message.equals("Ofer")) {
             textView.setText(message);
             textView.setTextColor(getResources().getColor(R.color.red));
         }
         TextView textView2 = findViewById(R.id.temp);
         if (textView2.getText() == "On"){
-            if (textView1.getText() == textView.getText()) {
+            if (textView.getText().toString().equals(textView1.getText().toString())) {
                 message = "";
                 textView.setText(message);
             }
@@ -115,7 +118,7 @@ public class login extends AppCompatActivity {
         LinearLayout ll=(LinearLayout)findViewById(R.id.LinearLayout);
         StringBuilder AllInfo = new StringBuilder();
         String tag;
-        for (int i = 1; i != 127; i = i+1) {
+        for (int i = 1; i != 134; i = i+1) {
             tag = String.valueOf(i);
             TextView txt= (TextView) ll.findViewWithTag(tag);
             String message = txt.getText().toString();
@@ -152,7 +155,7 @@ public class login extends AppCompatActivity {
     public void loadweek(String info) {
         String tag;
         String message;
-        for (int i = 1; i != 127; i = i+1) {
+        for (int i = 1; i != 134; i = i+1) {
             tag = String.valueOf(i);
             LinearLayout ll = (LinearLayout) findViewById(R.id.LinearLayout);
             TextView txt = (TextView) ll.findViewWithTag(tag);
@@ -160,28 +163,33 @@ public class login extends AppCompatActivity {
                 info = info.substring(4);
                 message = "Ofer";
                 txt.setText(message);
+                txt.setTextColor(getResources().getColor(R.color.red));
             }
-            if (info.startsWith("N")) {
+            else if (info.startsWith("N")) {
                 info = info.substring(4);
                 message = "Nava";
                 txt.setText(message);
+                txt.setTextColor(getResources().getColor(R.color.purple_500));
             }
-            if (info.startsWith("R")) {
+            else if (info.startsWith("R")) {
                 info = info.substring(4);
                 message = "Roee";
                 txt.setText(message);
+                txt.setTextColor(getResources().getColor(R.color.green));
             }
-            if (info.startsWith("K")) {
+            else if (info.startsWith("K")) {
                 info = info.substring(5);
                 message = "Keren";
                 txt.setText(message);
+                txt.setTextColor(getResources().getColor(R.color.pink));
             }
-            if (info.startsWith("A")) {
+            else if (info.startsWith("A")) {
                 info = info.substring(4);
                 message = "Aviv";
                 txt.setText(message);
+                txt.setTextColor(getResources().getColor(R.color.teal_700));
             }
-            if (info.startsWith("n")) {
+            else if (info.startsWith("n")) {
                 info = info.substring(2);
                 message = "";
                 txt.setText(message);
